@@ -10,19 +10,18 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Define your custom colors here (you can replace these with your actual color values)
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Import colors from Color.kt
+import com.shirakawa.shiori.ui.theme.Purple40
+import com.shirakawa.shiori.ui.theme.Purple80
+import com.shirakawa.shiori.ui.theme.PurpleGrey40
+import com.shirakawa.shiori.ui.theme.PurpleGrey80
+import com.shirakawa.shiori.ui.theme.Pink40
+import com.shirakawa.shiori.ui.theme.Pink80
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -34,13 +33,11 @@ private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
-    // Add other colors here if needed
 )
 
 @Composable
 fun MyComposeApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+ (Android S and above)
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -63,7 +60,7 @@ fun MyComposeApplicationTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,  // Make sure Typography is correctly defined in your typography file
+        typography = Typography,
         content = content
     )
 }
