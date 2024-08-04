@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -7,19 +6,19 @@ plugins {
 android {
     namespace = "com.shirakawa.shiori"
     compileSdk = 33
-    
+
     defaultConfig {
         applicationId = "com.shirakawa.shiori"
         minSdk = 32
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        
-        vectorDrawables { 
+
+        vectorDrawables {
             useSupportLibrary = true
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -33,7 +32,6 @@ android {
     }
 
     buildFeatures {
-        
         compose = true
     }
     composeOptions {
@@ -51,13 +49,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-
     implementation(platform("androidx.compose:compose-bom:2022.10.00"))
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha14")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.compose.ui:ui-graphics")
     debugImplementation("androidx.compose.ui:ui-tooling")
