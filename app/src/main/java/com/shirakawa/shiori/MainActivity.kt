@@ -1,27 +1,27 @@
-package com.shirayuki.shiori
+package com.shirakawa.shiori
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.shirayuki.shiori.ui.theme.MyComposeApplicationTheme
+import com.shirakawa.shiori.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyComposeApplicationTheme {
+            MyApplicationTheme {
+                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BasicUI()
+                    Greeting("Android")
                 }
             }
         }
@@ -29,28 +29,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun BasicUI() {
-    var text by remember { mutableStateOf("Hello, Jetpack Compose!") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(text = text)
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { text = "Button Clicked" }) {
-            Text("Click Me")
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BasicUIPreview() {
-    MyComposeApplicationTheme {
-        BasicUI()
+fun Greeting(name: String) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Text(text = "Hello, $name!")
     }
 }
