@@ -3,27 +3,32 @@ package com.shirayuki.shiori
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.shirayuki.shiori.ui.theme.MyComposeApplicationTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyComposeApplicationTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MultimediaConverterUI()
+                Surface(modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background) {
+                    ConverterUI()
                 }
             }
         }
@@ -31,115 +36,78 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MultimediaConverterUI() {
+fun ConverterUI() {
     var inputFilePath by remember { mutableStateOf(TextFieldValue("")) }
     var outputFilePath by remember { mutableStateOf(TextFieldValue("")) }
-    var selectedFormat by remember { mutableStateOf("mp4") }
+    var selectedFormat by remember { mutableStateOf("Select Format") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        // Input file picker
+        Text("FFmpeg Multimedia Converter", style = MaterialTheme.typography.headlineMedium)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         BasicTextField(
             value = inputFilePath,
             onValueChange = { inputFilePath = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .border(BorderStroke(1.dp, Color.Gray))
+                .padding(10.dp),
             decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(8.dp)
-                ) {
-                    if (inputFilePath.text.isEmpty()) {
-                        Text("Select input file")
-                    }
-                    innerTextField()
+                if (inputFilePath.text.isEmpty()) {
+                    Text("Input File Path", color = Color.Gray)
                 }
+                innerTextField()
             }
         )
 
-        // Output file path
+        Spacer(modifier = Modifier.height(10.dp))
+
         BasicTextField(
             value = outputFilePath,
             onValueChange = { outputFilePath = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .border(BorderStroke(1.dp, Color.Gray))
+                .padding(10.dp),
             decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(8.dp)
-                ) {
-                    if (outputFilePath.text.isEmpty()) {
-                        Text("Enter output file path")
-                    }
-                    innerTextField()
+                if (outputFilePath.text.isEmpty()) {
+                    Text("Output File Path", color = Color.Gray)
                 }
+                innerTextField()
             }
         )
 
-        // Format selector
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("Output Format: ")
-            DropdownMenuExample(selectedFormat) { format ->
-                selectedFormat = format
-            }
-        }
+        Spacer(modifier = Modifier.height(10.dp))
 
-        // Convert button
-        Button(
-            onClick = {
-                // Here, you would trigger the FFmpeg conversion
-            },
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
+        Text(
+            text = selectedFormat,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { /* Open format selection dialog */ }
+                .border(BorderStroke(1.dp, Color.Gray))
+                .padding(10.dp),
+            color = Color.Gray
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = { /* Start conversion */ }) {
             Text("Convert")
-        }
-    }
-}
-
-@Composable
-fun DropdownMenuExample(selectedFormat: String, onFormatSelected: (String) -> Unit) {
-    var expanded by remember { mutableStateOf(false) }
-    val formats = listOf("mp4", "mkv", "avi", "mp3", "wav")
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentSize(Alignment.TopStart)
-    ) {
-        Button(onClick = { expanded = true }) {
-            Text(selectedFormat)
-        }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            formats.forEach { format ->
-                DropdownMenuItem(onClick = {
-                    onFormatSelected(format)
-                    expanded = false
-                }) {
-                    Text(text = format)
-                }
-            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun ConverterUIPreview() {
     MyComposeApplicationTheme {
-        MultimediaConverterUI()
+        ConverterUI()
     }
 }
